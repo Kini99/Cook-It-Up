@@ -1,31 +1,22 @@
 const express=require("express");
-const mysql=require("mysql");
+const { connection } = require("./db");
+const { userRouter } = require("./routes/user.route");
 const cors=require("cors");
+const { recipeRouter } = require("./routes/recipe.route");
 require("dotenv").config();
 
 const app=express();
 
-const db=mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"Kinjal099",
-    database:"recipes"
-})
-
 app.use(cors());
 app.use(express.json());
 
-app.get("/user",(req,res)=>{
-    const q="SELECT * FROM user";
-    db.query(q,(err,data)=>{
-        if(err) return res.json(err);
-        return res.json(data);
-    })
-})
+app.use("/user",userRouter);
+app.use("/recipe",recipeRouter);
 
 app.listen(process.env.PORT,async()=>{
     try{
-        console.log("Server is running")
+        await connection;
+        console.log("Server is running and db is connected")
     }catch(err){
         console.log(err)
     }
