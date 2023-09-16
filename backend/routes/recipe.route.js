@@ -8,7 +8,7 @@ const recipeRouter= express.Router();
 
 recipeRouter.get("/random",async(req,res)=>{
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.APIKEY}&number=8`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.apiKey}&number=8`);
         const recipeData = response.data.recipes; 
         res.status(200).json(recipeData);
       } catch (error) {
@@ -19,7 +19,7 @@ recipeRouter.get("/random",async(req,res)=>{
 
 recipeRouter.get("/quick",async(req,res)=>{
   try {
-      const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=819f68cc93284522862246b46f14c18b&maxReadyTime=20&number=8`);
+      const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.apiKey}&maxReadyTime=20&number=8`);
       const recipeData = response.data.results; 
       res.status(200).json(recipeData);
     } catch (error) {
@@ -28,9 +28,23 @@ recipeRouter.get("/quick",async(req,res)=>{
     }
 })
 
+recipeRouter.get("/search",async(req,res)=>{
+  const { query } = req.query;
+  console.log("query in server", query)
+  try {
+      const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.apiKey}&query=${query}&number=5`);
+      const recipeData = response.data.results;
+      res.status(200).json(recipeData);
+    } catch (error) {
+      console.error("Error fetching recipe:", error);
+      res.status(500).json({ error: "Error fetching recipe" });
+    }
+})
+
+
 recipeRouter.get("/:id",async(req,res)=>{
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.APIKEY}&number=1`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.apiKey}&number=1`);
         const recipeData = response.data.recipes; 
         res.status(200).json(recipeData);
       } catch (error) {
@@ -41,7 +55,7 @@ recipeRouter.get("/:id",async(req,res)=>{
 
 recipeRouter.get("/similar",async(req,res)=>{
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/similar?apiKey=${process.env.APIKEY}&number=1`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/similar?apiKey=${process.env.apiKey}&number=1`);
         const recipeData = response.data.recipes; 
         res.status(200).json(recipeData);
       } catch (error) {

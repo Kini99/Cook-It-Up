@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+.nav-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white;
+}
+
+.navbar {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.navbar img {
+  height: 100px;
+  width: 120px;
+}
+.navbar .input {
+  margin: 0 auto;
+  border: 1px solid gray;
+}
+.navbar .button {
+  margin: 0 5px;
+  padding: 10px 15px;
+}
+.navbar #nav-menu-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar #nav-menu-container .nav-btn {
+  font-size: x-large;
+  font-family: "DM Sans", sans-serif;
+  border: none;
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+}
+.navbar #nav-menu-container .nav-btn:hover {
+  text-decoration: underline;
+}
+.navbar .btn-container {
+  display: flex;
+  justify-content: space-around;
+  width: 22%;
+  margin-top: 20px;
+}
+.navbar .btn-container .btn-div {
+  display: flex;
+  align-items: center;
+  font-size: large;
+}
+.navbar .btn-container .btn-div:hover {
+  color: orange;
+}
+
+.nav-menu {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+  .navbar {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .navbar .input {
+    width: 70%;
+  }
+  .navbar .button {
+    width: 30%;
+  }
+  .navbar h1 {
+    padding: 10px 8px;
+    font-size: 25px;
+  }
+  .navbar .menu {
+    margin-left: 300px;
+  }
+  .navbar #nav-menu-container {
+    display: none;
+  }
+  .navbar #nav-menu-container button {
+    display: none;
+  }
+}
+@media all and (min-width: 0px) and (max-width: 767px) {
+  #nav-menu-container {
+    display: none;
+  }
+  #nav-menu-container button {
+    display: none;
+  }
+  .navbar {
+    width: 90%;
+  }
+  .navbar .input {
+    width: 90%;
+  }
+  .navbar .button {
+    width: 30%;
+  }
+  .navbar h1 {
+    padding: 10px 5px;
+    font-size: 25px;
+  }
+  .navbar .btn-container {
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    margin-top: 20px;
+  }
+  .navbar .btn-container .btn-div {
+    display: flex;
+    align-items: center;
+    font-size: large;
+  }
+  .navbar .btn-container .btn-div:hover {
+    color: white;
+  }
+}/*# sourceMappingURL=Navbar.css.map */

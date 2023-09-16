@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import "../styles/Home.css";
-import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { Button, Input } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { getRecipes } from '../redux/SearchReducer/Action';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
 
-  const [query,setquery]=useState("");
+  const [query, setQuery] = useState('');
+  const dispatch = useDispatch();
+  const navigate=useNavigate();
 
   const handleSearch = () => {
-
-  }
+    dispatch(getRecipes(query));
+    navigate("/search");
+  };
 
   return (
     <>
@@ -16,11 +22,10 @@ const SearchBar = () => {
         type="text"
         placeholder='Type any dish...'
         className='input'
-        onChange={(e)=>setquery(e.target.value)}
+        onChange={(e)=>setQuery(e.target.value)}
       />
       <Button
         h={{ base: 'auto', md: '85%' }}
-        m={{ base: '5% 0', md: '5%' }}
         size='lg'
         bg={"orange.400"}
         _hover={{ bg: "orange.300" }}

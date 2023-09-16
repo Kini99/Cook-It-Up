@@ -12,11 +12,11 @@ const [randomRecipes,setrandomRecipes]=useState();
 const [quickRecipes,setQuickRecipes]=useState();
 
 useEffect(()=>{
- axios.get(`http://localhost:8080/recipe/random`)
+ axios.get(`${process.env.REACT_APP_SERVER}recipe/random`)
   .then((res) => res.data)
   .then((data) =>setrandomRecipes(data))
   .catch((error) => console.log(error));
-  axios.get(`http://localhost:8080/recipe/quick`)
+  axios.get(`${process.env.REACT_APP_SERVER}recipe/quick`)
   .then((res) =>res.data)
   .then((data) =>setQuickRecipes(data))
   .catch((error) => console.log(error));

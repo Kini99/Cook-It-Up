@@ -1,0 +1,152 @@
+@import "./Variable.scss";
+
+.nav-container {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: white;
+}
+
+.navbar {
+  width: 100%;
+  margin: auto;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  img {
+    height: 100px;
+    width: 120px;
+  }
+
+  .input {
+    margin: 0 auto;
+    border: 1px solid gray;
+  }
+
+  .button {
+    margin: 0 5px;
+    padding: 10px 15px;
+  }
+
+  #nav-menu-container {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .nav-btn {
+      font-size: x-large;
+      font-family: "DM Sans", sans-serif;
+      border: none;
+      background-color: transparent;
+      color: black;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .btn-container{
+    display: flex;
+    justify-content: space-around;
+    width: 22%;
+    margin-top: 20px;
+    .btn-div{
+      display: flex;
+      align-items: center;
+      font-size: large;
+    }
+    .btn-div:hover {
+      color: orange;
+    }
+  }
+
+}
+
+.nav-menu {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+
+
+  .navbar {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+
+    .input {
+      width: 70%;
+    }
+
+    .button {
+      width: 30%;
+    }
+
+    h1 {
+      padding: 10px 8px;
+      font-size: 25px;
+    }
+
+    .menu {
+      margin-left: 300px;
+    }
+
+    #nav-menu-container {
+      display: none;
+
+      button {
+        display: none;
+      }
+    }
+  }
+}
+
+@media all and (min-width: 0px) and (max-width: 767px) {
+  #nav-menu-container {
+    display: none;
+
+    button {
+      display: none;
+    }
+  }
+
+  .navbar {
+    width: 90%;
+
+    .input {
+      width: 90%;
+    }
+
+    .button {
+      width: 30%;
+    }
+
+    h1 {
+      padding: 10px 5px;
+      font-size: 25px;
+    }
+    .btn-container{
+      display: flex;
+      justify-content: space-around;
+      width: 30%;
+      margin-top: 20px;
+      .btn-div{
+        display: flex;
+        align-items: center;
+        font-size: large;
+      }
+      .btn-div:hover {
+        color: white;
+      }
+  }
+}
+}
