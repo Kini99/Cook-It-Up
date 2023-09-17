@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 .div {
+  flex: 0 0 calc(25% - 20px);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 15px;
   padding: 10px;

@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import time from "../assets/time.png";
 import likes from "../assets/likes.png";
 import score from "../assets/score.png";
+import { Link } from 'react-router-dom';
 import "../styles/RecipeCarousal.css";
 
 export default function RecipeCarousel({ data }) {
@@ -13,6 +14,7 @@ export default function RecipeCarousel({ data }) {
 
   const recipe = data?.map((item) => (
     <div key={item.id} className="div">
+      <Link to={`/recipe/${item.id}`} className='result-link'>
       <img src={item.image} alt={item.title} className="image" />
       <div className="details">
         <h2>{item.title}</h2>
@@ -31,6 +33,7 @@ export default function RecipeCarousel({ data }) {
           </div>
         </div>}
       </div>
+      </Link>
     </div>
   ));
 

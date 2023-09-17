@@ -5,3 +5,29 @@
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+.pagination-container{
+    display: flex;
+    // justify-content: flex-end;
+    .pagination-div{
+        display: flex;
+        justify-content: space-between;
+        width:"10%";
+        margin-left: auto;
+        margin-bottom: "10px";
+        button{
+            background-color: orange;
+            color:white;
+            padding:0 10px;
+            border-radius: 0.25rem;
+        }
+        button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+          span{
+            color:gray;
+          }
+          
+    }
+}

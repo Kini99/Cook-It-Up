@@ -15,8 +15,8 @@ userRouter.post("/register",async(req,res)=>{
       }
 
     try{
-    const existingUserEmail = await UserModel.findOne({email});
-    if (existingUserEmail) {
+    const existingUser = await UserModel.findOne({username});
+    if (existingUser) {
         return res.status(200).json({ msg:'User Already Exists!'});
       }
     bcrypt.hash(password,5,async(err,hash)=>{
@@ -35,12 +35,12 @@ userRouter.post("/register",async(req,res)=>{
 
 
 userRouter.post("/login",async(req,res)=>{
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try{
         const user = await UserModel.findOne({ email });
         if (user) {
-           bcrypt.compare(password,user.password,function(err,result){
+           bcrypt.compare(password,user.password,(err,result)=>{
             if(result){
                 var token=jwt.sign({_id:user._id},"sy",{
                     expiresIn:120

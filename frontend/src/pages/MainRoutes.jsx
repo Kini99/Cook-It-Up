@@ -5,6 +5,7 @@ import Login from './Login';
 import Recipe from './Recipe';
 import Favorites from './Favorites';
 import SearchResults from './SearchResults';
+import { PrivateRoute } from '../components/PrivateRoute';
 
 const MainRoutes = () => {
   return (
@@ -13,7 +14,7 @@ const MainRoutes = () => {
         <Route path="/search" element={<SearchResults />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/recipe/:id" element={<Recipe />}/>
-        <Route path="/favorites" element={<Favorites />}/>
+        <Route path="/favorites" element={<PrivateRoute><Favorites /></PrivateRoute>}/>
     </Routes>
   )
 }

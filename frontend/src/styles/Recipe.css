@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+.recipe-container {
+  width: 80%;
+  margin: auto;
+}
+.recipe-container .heading {
+  display: flex;
+  justify-content: space-between;
+}
+.recipe-container .heading h1 {
+  font-size: x-large;
+  font-weight: bold;
+}
+.recipe-container .recipe-details {
+  display: flex;
+  justify-content: space-between;
+  gap: 3%;
+  align-items: center;
+  margin: 15px 0;
+  transition: transform 0.3s;
+}
+.recipe-container .recipe-details .image-container {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 15px;
+}
+.recipe-container .recipe-details .image-container .flex-div {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.recipe-container .recipe-details .image-container .flex-div div {
+  align-items: center;
+  margin-left: -7px;
+  height: 70px;
+}
+.recipe-container .recipe-details .image-container .flex-div img {
+  height: 30px;
+  margin: auto;
+}
+.recipe-container .recipe-details .image-container .flex-div p {
+  font-size: small;
+  width: 120px;
+  text-align: center;
+}
+.recipe-container .recipe-details .image-container:hover {
+  transform: scale(1.05);
+}
+.recipe-container .recipe-details p:hover {
+  color: rgb(255, 89, 0);
+}
+.recipe-container h3 {
+  font-size: larger;
+  font-weight: bold;
+}
+.recipe-container .ingredients-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.recipe-container .ingredients-container .ingredient {
+  align-items: center;
+  text-align: center;
+}
+.recipe-container .ingredients-container .ingredient img {
+  margin: auto;
+  height: 50px;
+}
+
+.similar-recipe {
+  font-size: x-large;
+  font-weight: bold;
+  width: 80%;
+  margin: auto;
+}/*# sourceMappingURL=Recipe.css.map */

@@ -1,0 +1,92 @@
+@import "./Variable.scss";
+
+
+
+.recipe-container {
+    width: 80%;
+    margin: auto;
+
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        h1 {
+            font-size: x-large;
+            font-weight: bold;
+        }
+    }
+
+    .recipe-details {
+        display: flex;
+        justify-content: space-between;
+        gap: 3%;
+        align-items: center;
+        margin: 15px 0;
+        transition: transform 0.3s;
+
+        .image-container {
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            border-radius: 15px;
+
+            .flex-div {
+                display: flex;
+                justify-content: space-between;
+                // gap: 3px;
+                margin: 10px 0;
+
+                div {
+                    align-items: center;
+                    margin-left: -7px;
+                    height: 70px;
+                }
+
+                img {
+                    height: 30px;
+                    margin: auto;
+                }
+
+                p {
+                    font-size: small;
+                    width: 120px;
+                    text-align: center;
+                }
+            }
+        }
+
+        .image-container:hover {
+            transform: scale(1.05);
+        }
+
+        p:hover {
+            color: rgb(255, 89, 0);
+        }
+    }
+
+    h3 {
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    .ingredients-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin: 10px 0;
+
+        .ingredient {
+            align-items: center;
+            text-align: center;
+
+            img {
+                margin: auto;
+                height: 50px;
+            }
+        }
+    }
+}
+
+.similar-recipe{
+    font-size: x-large;
+    font-weight: bold;
+    width: 80%;
+    margin: auto;
+}

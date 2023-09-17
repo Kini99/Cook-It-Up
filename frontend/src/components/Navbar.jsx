@@ -6,14 +6,19 @@ import { BsBookmarkHeart } from 'react-icons/bs';
 import { IoLogInOutline } from 'react-icons/io5';
 import "../styles/Navbar.css";
 import { Button, Input } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes } from '../redux/SearchReducer/Action';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [sizing] = useMediaQuery('(max-width: 1024px)')
+  const [sizing] = useMediaQuery('(max-width: 1024px)');
+  const [query, setQuery] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isAuth } = useSelector((store) => store.AuthReducer);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 1024px)');
@@ -31,20 +36,20 @@ const Navbar = () => {
   }, []);
 
   const handleLogin = () => {
-
+    navigate("/login");
   }
 
   const handleSaved = () => {
+    if (!isAuth) {
+      return alert("Kindly Login First!");
+    }
+    navigate("/favorites");
 
   }
 
   const handleHomeClick = () => {
-
+    navigate("/");
   }
-
-  const [query, setQuery] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSearch = () => {
     dispatch(getRecipes(query));
@@ -78,9 +83,9 @@ const Navbar = () => {
             as={IconButton}
             aria-label='Options'
             icon={<GiHamburgerMenu style={{ width: "40px", height: "70%", border: "none" }} />}
-            sx={{ border: "none", backgroundColor: "transparent", marginTop:"15px" }}
+            sx={{ border: "none", backgroundColor: "transparent", marginTop: "15px" }}
           />
-          <MenuList sx={{ zIndex: "100", backgroundColor: "orange"}}>
+          <MenuList sx={{ zIndex: "100", backgroundColor: "orange" }}>
             <MenuItem style={{ border: "none", color: "black", margin: "10px", backgroundColor: "transparent" }}>
               <div onClick={handleSaved} className="btn-div">
                 <BsBookmarkHeart />

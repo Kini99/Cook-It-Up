@@ -30,9 +30,9 @@ recipeRouter.get("/quick",async(req,res)=>{
 
 recipeRouter.get("/search",async(req,res)=>{
   const { query } = req.query;
-  console.log("query in server", query)
+  // const offset=(page-1)*20;
   try {
-      const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.apiKey}&query=${query}&number=5`);
+      const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.apiKey}&query=${query}&number=20`);
       const recipeData = response.data.results;
       res.status(200).json(recipeData);
     } catch (error) {
@@ -43,9 +43,10 @@ recipeRouter.get("/search",async(req,res)=>{
 
 
 recipeRouter.get("/:id",async(req,res)=>{
+  const { id } = req.params;
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.apiKey}&number=1`);
-        const recipeData = response.data.recipes; 
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.apiKey}`);
+        const recipeData = response.data; 
         res.status(200).json(recipeData);
       } catch (error) {
         console.error("Error fetching recipe:", error);
@@ -53,10 +54,12 @@ recipeRouter.get("/:id",async(req,res)=>{
       }
 })
 
-recipeRouter.get("/similar",async(req,res)=>{
+recipeRouter.get("/similar/:id",async(req,res)=>{
+  const { id } = req.params;
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/similar?apiKey=${process.env.apiKey}&number=1`);
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/similar?apiKey=${process.env.apiKey}&number=8`);
         const recipeData = response.data.recipes; 
+        console.log(recipeData)
         res.status(200).json(recipeData);
       } catch (error) {
         console.error("Error fetching recipe:", error);
@@ -65,7 +68,7 @@ recipeRouter.get("/similar",async(req,res)=>{
 })
 
 recipeRouter.post("/save", auth, async (req, res) => {
-    try {
+  try {
         const recipe = new RecipeModel(req.body);
         await recipe.save();
         res.status(200).json({ msg: "New Recipe Saved", recipe: req.body })
