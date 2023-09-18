@@ -68,7 +68,7 @@
 
     .ingredients-container {
         display: flex;
-        justify-content: space-between;
+        gap:20px;
         flex-wrap: wrap;
         margin: 10px 0;
 
@@ -88,5 +88,5 @@
     font-size: x-large;
     font-weight: bold;
     width: 80%;
-    margin: auto;
+    margin: 50px auto;
 }

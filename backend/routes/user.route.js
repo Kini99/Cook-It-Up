@@ -17,14 +17,14 @@ userRouter.post("/register",async(req,res)=>{
     try{
     const existingUser = await UserModel.findOne({username});
     if (existingUser) {
-        return res.status(200).json({ msg:'User Already Exists!'});
+        return res.status(400).json({ msg:'User Already Exists!'});
       }
     bcrypt.hash(password,5,async(err,hash)=>{
         if(err){
-            res.status(400).json({error:err.messag})
+            res.status(400).json({error:err.messag});
         }else{
-            const user=new UserModel({username,email,password:hash})
-            await user.save()
+            const user=new UserModel({username,email,password:hash});
+            await user.save();
         }
     })
     res.status(200).json({msg:"Registration Successful!",registeredUser:req.body})
@@ -38,21 +38,21 @@ userRouter.post("/login",async(req,res)=>{
     const { username, password } = req.body;
 
     try{
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOne({ username });
         if (user) {
            bcrypt.compare(password,user.password,(err,result)=>{
             if(result){
-                var token=jwt.sign({_id:user._id},"sy",{
-                    expiresIn:120
+                var token=jwt.sign({_id:user._id},"key",{
+                    expiresIn:"7d"
                   })
-                res.status(200).json({msg:"Login successful!",token:token})
+                res.status(200).json({msg:"Login successful!",token:token, username:user.username})
+            }else{
+                return res.status(400).json({ message: "Invalid password." });
             }
            })
-
         }else{
-            res.status(200).json({msg:"User Not Found!"})
+            res.status(400).json({msg:"User Not Found!"})
         }
-
     }catch(err){
           return res.status(400).json({ error: err.messag});
     }

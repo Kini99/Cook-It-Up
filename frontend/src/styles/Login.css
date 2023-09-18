@@ -1,0 +1,42 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+.main-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
+}
+.main-container .footer {
+  margin: 0 auto;
+}
+.main-container .container {
+  height: 82vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15%;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+.main-container .container .login-container {
+  height: 70%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+}
+.main-container .container .login-container .panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.main-container .container .login-container .panel .form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.main-container .container .login-container .panel .form .button {
+  width: 30%;
+}/*# sourceMappingURL=Login.css.map */

@@ -15,6 +15,7 @@ const MainRoutes = () => {
         <Route path="/login" element={<Login />}/>
         <Route path="/recipe/:id" element={<Recipe />}/>
         <Route path="/favorites" element={<PrivateRoute><Favorites /></PrivateRoute>}/>
+        {/* <Route path="/favorites" element={<Favorites />} /> */}
     </Routes>
   )
 }

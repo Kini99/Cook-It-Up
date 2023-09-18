@@ -56,9 +56,10 @@ recipeRouter.get("/:id",async(req,res)=>{
 
 recipeRouter.get("/similar/:id",async(req,res)=>{
   const { id } = req.params;
+  console.log(id)
     try {
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/similar?apiKey=${process.env.apiKey}&number=8`);
-        const recipeData = response.data.recipes; 
+        const response = await axios.get(`https://api.spoonacular.com/recipes/646043/similar?apiKey=819f68cc93284522862246b46f14c18b&number=8`);
+        const recipeData = response.data; 
         console.log(recipeData)
         res.status(200).json(recipeData);
       } catch (error) {

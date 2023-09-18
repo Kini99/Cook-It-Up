@@ -19,7 +19,7 @@ const Recipe = () => {
   const dispatch = useDispatch();
   const [similarRecipes,setSimilarRecipes]=useState();
 
-  const { isAuth } = useSelector((store) => store.AuthReducer);
+  const { isAuth,username } = useSelector((store) => store.AuthReducer);
 
   useEffect(() => {
     dispatch(getRecipeDetails(id));
@@ -28,7 +28,7 @@ const Recipe = () => {
   useEffect(()=>{
     axios.get(`${process.env.REACT_APP_SERVER}recipe/similar/${id}`)
      .then((res) => res.data)
-     .then((data) =>console.log("data",data))
+     .then((data) =>setSimilarRecipes(data))
      .catch((error) => console.log(error));
    },[])
 
@@ -43,12 +43,14 @@ const Recipe = () => {
 
   }
 
+  console.log(recipe)
+
   return (
     <>
       <Navbar />
       {recipe && (<div className='recipe-container'>
         <div className='heading'>
-          <h1>{recipe.title}</h1>
+          <h1>{recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1)}</h1>
           <Button
             h={{ base: 'auto', md: '85%' }}
             p={"2"}
@@ -87,7 +89,7 @@ const Recipe = () => {
             <p>{recipe.diets?.map(capitalizeFirstLetter).join(', ')}</p>
             <br />
             <h3>Instructions:</h3>
-            <p>{recipe.instructions}</p>
+            <p>{recipe.instructions.charAt(0).toUpperCase() + recipe.instructions.slice(1)}</p>
           </div>
         </div>
         <div>

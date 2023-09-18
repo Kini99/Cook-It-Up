@@ -15,9 +15,9 @@ export default function RecipeCarousel({ data }) {
   const recipe = data?.map((item) => (
     <div key={item.id} className="div">
       <Link to={`/recipe/${item.id}`} className='result-link'>
-      <img src={item.image} alt={item.title} className="image" />
+        {item.image && <img src={item.image} alt={item.title} className="image" />}
       <div className="details">
-        <h2>{item.title}</h2>
+        <h2>{item.title.charAt(0).toUpperCase() + item.title.slice(1)}</h2>
         {item.aggregateLikes && <div className="flex-div">
           <div>
             <img src={likes} alt="icon" />

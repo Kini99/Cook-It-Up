@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar';
 import RecipeCarousel from '../components/RecipeCarousal';
 import axios from "axios";
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Home = () => {
 
@@ -23,6 +24,8 @@ useEffect(()=>{
 },[])
 
   return (
+    <>
+    <Navbar />
     <div className='container'>
       <img src={logo} alt="" className='logo' />
       <SearchBar className="input"/>
@@ -32,6 +35,7 @@ useEffect(()=>{
       <RecipeCarousel data={quickRecipes}/>
       <Footer/>
     </div>
+    </>
   )
 }
 

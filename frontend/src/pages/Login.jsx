@@ -1,35 +1,159 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/AuthReducer/Action";
+import { useDispatch, useSelector } from "react-redux";
+import { login, signup } from "../redux/AuthReducer/Action";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Button } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react';
+import axios from "axios";
+import { FcGoogle } from "react-icons/fc";
+import { BsGithub } from "react-icons/bs";
+import { Link } from 'react-router-dom';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import jwtDecode from 'jwt-decode';
+import "../styles/Login.css";
+import logo from "../assets/logo.png";
+import Footer from "../components/Footer";
 
 const Login = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  const dispatch=useDispatch();
-  const location=useLocation();
-  const navigate=useNavigate();
-  
-  const handleLogin=()=>{
-    const userData={
-      email,password
-    }
+  const { isAuth,username } = useSelector((store) => store.AuthReducer);
+
+console.log("here", isAuth,username);
+
+  const handleLogin = () => {
+    const userData = {
+      username:name,
+      password,
+    };
+
     dispatch(login(userData))
-    .then((res)=>{
-      navigate(location.state)
-    })
-  }
+      .then((res) => {
+        console.log("login successful", res)
+        console.log(username)
+        navigate(location.state)
+      })
+
+    setName("");
+    setPassword("");
+  };
+
+  const handleSignup = () => {
+    const userData = {
+      username:name,
+      email,
+      password,
+    };
+console.log("userdata", userData)
+    dispatch(signup(userData))
+      .then((res) => {
+        navigate(location.state)
+      })
+      .catch((err) => alert(err.response.data.message));
+
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const handleSuccess = async (response) => {
+    const { credential } = response;
+    const decodedToken = jwtDecode(credential);
+    const userName = decodedToken.name
+    const userEmail = decodedToken.email;
+
+    const data = {
+      email: userEmail,
+      password: userEmail,
+      username: userName
+    };
+
+    console.log(data)
+
+    try {
+      // const isUser = await axios.post(`${baseUrl}/google/register`, data);
+      // if(isUser.data.success){
+      //   setLoading(true);
+      //   try {
+      //     const response = await axios.post(`${baseUrl}/login`, {
+      //       email: data.email, 
+      //       password: data.password, 
+      //     });
+
+      //     if (response.data.success) {
+      //       const userData = response.data
+      //       localStorage.setItem('loggedUser', JSON.stringify(userData));
+      //       showUserName();
+      //       onClose();
+      //     } else {
+      //       setErrorMessage(response.data.msg);
+      //     }
+      //   } catch (error) {
+      //     setErrorMessage('Wrong credentials');
+      //   }
+      //   setLoading(false);
+      // }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleFailure = () => {
+    console.log('Google login failed');
+  };
 
   return (
     <>
-    <h2>Log In</h2>
-    <input  type="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-    <input
-      type="password"
-      placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} 
-    />
-    <button onClick={handleLogin}>Log In</button>
+      <div className="main-container">
+        <div className="container">
+          <img src={logo} alt="" />
+          <Tabs isFitted variant='soft-rounded' colorScheme='orange' className="login-container">
+            <TabList>
+              <Tab>LOGIN</Tab>
+              <Tab>REGISTER</Tab>
+            </TabList>
+            <TabPanels >
+              <TabPanel className="panel">
+                <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
+                  <GoogleLogin
+                    id="google-login-button"
+                    onSuccess={handleSuccess}
+                    onError={handleFailure}
+                  />
+                </GoogleOAuthProvider>
+                <p>Or:</p>
+                <form className="form">
+                  <Input variant='outline' placeholder='Enter Username' value={name} onChange={(e) => setName(e.target.value)} required/>
+                  <Input variant='outline' placeholder='Enter Password' value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                  <Button colorScheme='blue' className="button" onClick={handleLogin}>Login</Button>
+                </form>
+              </TabPanel>
+              <TabPanel className="panel">
+                <GoogleOAuthProvider clientId={process.env.REACT_APP_CLIENT_ID}>
+                  <GoogleLogin
+                    id="google-login-button"
+                    onSuccess={handleSuccess}
+                    onError={handleFailure}
+                  />
+                </GoogleOAuthProvider>
+                <p>Or:</p>
+                <form className="form">
+                  <Input variant='outline' placeholder='Enter Username' value={name} onChange={(e) => setName(e.target.value)} required />
+                  <Input variant='outline' placeholder='Enter Email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+                  <Input variant='outline' placeholder='Enter Password' value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                  <Button colorScheme='blue' className="button" onClick={handleSignup}>Sign Up</Button>
+                </form>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </div>
+        <Footer className="footer" />
+      </div>
     </>
   )
 }
