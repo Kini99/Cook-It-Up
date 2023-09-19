@@ -8,6 +8,13 @@
   background-color: white;
 }
 
+.search-icon{
+  display: none;
+}
+.search-text{
+  display: block;
+}
+
 .navbar {
   width: 100%;
   margin: auto;
@@ -15,6 +22,12 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  .navbar-div{
+    display: flex;
+    width: 50%;
+    margin-top: 20px;
+  }
 
   img {
     height: 100px;
@@ -149,4 +162,11 @@
       }
   }
 }
+.search-icon{
+  display: block;
 }
+.search-text{
+  display: none;
+}
+}
+

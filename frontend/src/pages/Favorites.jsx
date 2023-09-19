@@ -28,6 +28,7 @@ console.log("fav", savedRecipe, username)
   return (
     <>
     <Navbar />
+    <h1>SAVED RECIPES : </h1>
     { savedRecipe.length>0 ? <div className='results-container'>
             {savedRecipe.map((item) =>
             <div key={item.recipe.id} className="div">

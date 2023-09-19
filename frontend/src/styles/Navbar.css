@@ -7,6 +7,14 @@
   background-color: white;
 }
 
+.search-icon {
+  display: none;
+}
+
+.search-text {
+  display: block;
+}
+
 .navbar {
   width: 100%;
   margin: auto;
@@ -14,6 +22,11 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+.navbar .navbar-div {
+  display: flex;
+  width: 50%;
+  margin-top: 20px;
 }
 .navbar img {
   height: 100px;
@@ -124,5 +137,11 @@
   }
   .navbar .btn-container .btn-div:hover {
     color: white;
+  }
+  .search-icon {
+    display: block;
+  }
+  .search-text {
+    display: none;
   }
 }/*# sourceMappingURL=Navbar.css.map */

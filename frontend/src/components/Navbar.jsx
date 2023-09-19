@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from "../assets/logo.png"
 import { IconButton, Menu, MenuButton, MenuItem, MenuList, useMediaQuery } from '@chakra-ui/react';
+import { ImSearch } from 'react-icons/im';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsBookmarkHeart } from 'react-icons/bs';
 import { IoLogInOutline } from 'react-icons/io5';
@@ -70,8 +71,8 @@ const Navbar = () => {
   return (
     <div className='nav-container'>
       <div className='navbar'>
-        <img src={logo} alt="" id="nav-menu" onClick={handleHomeClick} />
-        <div style={{ display: "flex", width: "50%", marginTop: "20px" }}>
+        <img src={logo} alt="" onClick={handleHomeClick} />
+        <div className='navbar-div' >
           <Input
             type="text"
             placeholder='Type any dish...'
@@ -86,7 +87,12 @@ const Navbar = () => {
             onClick={handleSearch}
             className='button'
           >
-            Search
+            <span className="search-text">
+              Search
+            </span>
+            <span className="search-icon">
+              <ImSearch />
+            </span>
           </Button>
         </div>
         {isOpen ? <Menu>
@@ -105,13 +111,13 @@ const Navbar = () => {
               </div>
             </MenuItem>
             <MenuItem style={{ border: "none", color: "black", margin: "10px", backgroundColor: "transparent" }}>
-            {user ? <div onClick={handleLogout} className="btn-div">
-            <IoLogInOutline />
-            <button className='nav-btn' >Logout</button>
-          </div> : <div onClick={handleLogin} className="btn-div">
-            <IoLogInOutline />
-            <button className='nav-btn' >Login/Signup</button>
-          </div>}
+              {user ? <div onClick={handleLogout} className="btn-div">
+                <IoLogInOutline />
+                <button className='nav-btn' >Logout</button>
+              </div> : <div onClick={handleLogin} className="btn-div">
+                <IoLogInOutline />
+                <button className='nav-btn' >Login/Signup</button>
+              </div>}
             </MenuItem>
           </MenuList>
         </Menu> : null}

@@ -4,10 +4,20 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    min-height: 60vh;
+    .div{
+        min-width: 300px;
+        max-height: 350px;
+    }
 }
-
+h1{
+    font-size: x-large;
+    font-weight: bold;
+    margin:10px 50px;
+}
 .pagination-container{
     display: flex;
+    margin:20px;
     // justify-content: flex-end;
     .pagination-div{
         display: flex;
@@ -20,6 +30,7 @@
             color:white;
             padding:0 10px;
             border-radius: 0.25rem;
+            margin:0 5px;
         }
         button.disabled {
             opacity: 0.5;

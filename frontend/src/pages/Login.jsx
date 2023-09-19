@@ -81,28 +81,22 @@ const Login = () => {
     console.log(data)
 
     try {
-      // const isUser = await axios.post(`${baseUrl}/google/register`, data);
-      // if(isUser.data.success){
-      //   setLoading(true);
-      //   try {
-      //     const response = await axios.post(`${baseUrl}/login`, {
-      //       email: data.email, 
-      //       password: data.password, 
-      //     });
+      const isUser = await axios.post(`${process.env.REACT_APP_SERVER}/google/register`, data);
+      if(isUser.data.success){
+        try {
+          const response = await axios.post(`${process.env.REACT_APP_SERVER}/login`, {
+            email: data.email, 
+            password: data.password, 
+          });
 
-      //     if (response.data.success) {
-      //       const userData = response.data
-      //       localStorage.setItem('loggedUser', JSON.stringify(userData));
-      //       showUserName();
-      //       onClose();
-      //     } else {
-      //       setErrorMessage(response.data.msg);
-      //     }
-      //   } catch (error) {
-      //     setErrorMessage('Wrong credentials');
-      //   }
-      //   setLoading(false);
-      // }
+          if (response.data.success) {
+            const userData = response.data
+            localStorage.setItem('user', JSON.stringify(userData.username));
+          } 
+        } catch (error) {
+          console.log(error)
+        }
+      }
     } catch (error) {
       console.log(error.message);
     }

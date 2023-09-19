@@ -3,10 +3,22 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  min-height: 60vh;
+}
+.results-container .div {
+  min-width: 300px;
+  max-height: 350px;
+}
+
+h1 {
+  font-size: x-large;
+  font-weight: bold;
+  margin: 10px 50px;
 }
 
 .pagination-container {
   display: flex;
+  margin: 20px;
 }
 .pagination-container .pagination-div {
   display: flex;
@@ -20,6 +32,7 @@
   color: white;
   padding: 0 10px;
   border-radius: 0.25rem;
+  margin: 0 5px;
 }
 .pagination-container .pagination-div button.disabled {
   opacity: 0.5;
