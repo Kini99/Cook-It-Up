@@ -1,11 +1,10 @@
 const mongoose=require("mongoose")
 
-//extendedIngredients
-const extendedIngredientsSchema = new mongoose.Schema({
-    id: Number,
-    image: String,
-    name: String
-})
+// const extendedIngredientsSchema = new mongoose.Schema({
+//     id: Number,
+//     image: String,
+//     name: String
+// })
 
 const recipeSchemaDetail = new mongoose.Schema({
     aggregateLikes: {
@@ -14,7 +13,7 @@ const recipeSchemaDetail = new mongoose.Schema({
     cuisines: [String],
     diets: [String],
     dishTypes: [String],
-    extendedIngredients: [extendedIngredientsSchema],
+    extendedIngredients: [Object],
     healthScore: Number,
     id: Number,
     image: String,
@@ -26,7 +25,7 @@ const recipeSchemaDetail = new mongoose.Schema({
 
 const recipeSchema=mongoose.Schema({
     recipe:[recipeSchemaDetail],
-    userID:Number
+    username:String
 },{
     
     versionKey:false

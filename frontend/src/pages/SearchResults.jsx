@@ -8,38 +8,44 @@ import { Link } from 'react-router-dom';
 
 const SearchResults = () => {
 
-    // const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const { results } = useSelector((store) => {
         return store.SearchReducer
     }, shallowEqual);
 
-    // const totalPages = Math.ceil(results.length / 10);
+    const totalPages = Math.ceil(results.length / 10);
 
-    // const startIndex = (currentPage - 1) * 10;
-    // const endIndex = startIndex + 10;
+    const startIndex = (currentPage - 1) * 10;
+    const endIndex = startIndex + 10;
 
-    // const currentPageData = results.slice(startIndex, endIndex);
+    const currentPageData = results.slice(startIndex, endIndex);
 
-    // const handlePreviousPage = () => {
-    //     if (currentPage > 1) {
-    //         setCurrentPage(currentPage - 1);
-    //     }
-    // };
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
-    // const handleNextPage = () => {
-    //     if (currentPage < totalPages) {
-    //         setCurrentPage(currentPage + 1);
-    //     }
-    // };
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    const handleLinkClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     return (
         <>
         <Navbar/>
         <div className='results-container'>
-            {results.map((item) =>
+            {currentPageData.map((item) =>
             <div key={item.id} className="div">
-                 <Link to={`/recipe/${item.id}`} className='result-link'>
+                 <Link to={`/recipe/${item.id}`} onClick={handleLinkClick} className='result-link'>
                 <img src={item.image} alt={item.title} className="image" />
                 <div className="details">
                     <h2>{item.title}</h2>
@@ -48,7 +54,7 @@ const SearchResults = () => {
             </div>
         )}
         </div>
-        {/* <div className="pagination-container">
+        <div className="pagination-container">
                 <div className="pagination-div">
                     <button
                         onClick={handlePreviousPage}
@@ -66,7 +72,7 @@ const SearchResults = () => {
                         Next
                     </button>
                 </div>
-            </div> */}
+            </div>
             <Footer/>
         </>
     )

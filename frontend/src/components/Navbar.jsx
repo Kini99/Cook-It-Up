@@ -8,7 +8,9 @@ import "../styles/Navbar.css";
 import { Button, Input } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes } from '../redux/SearchReducer/Action';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { logout } from '../redux/AuthReducer/Action';
+import { clear } from '../redux/SavedReducer/Action';
 
 const Navbar = () => {
 
@@ -18,7 +20,9 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isAuth } = useSelector((store) => store.AuthReducer);
+  const { isAuth, username } = useSelector((store) => store.AuthReducer);
+
+  const user = localStorage.getItem("user");
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 1024px)');
@@ -40,11 +44,12 @@ const Navbar = () => {
   }
 
   const handleSaved = () => {
-    if (!isAuth) {
-      return alert("Kindly Login First!");
+    if (!user) {
+      alert("Kindly Login First!");
+      navigate("/login", { state: { from: "/favorites" } });
+      return;
     }
     navigate("/favorites");
-
   }
 
   const handleHomeClick = () => {
@@ -55,6 +60,12 @@ const Navbar = () => {
     dispatch(getRecipes(query));
     navigate("/search");
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clear());
+    localStorage.removeItem("user");
+  }
 
   return (
     <div className='nav-container'>
@@ -94,10 +105,13 @@ const Navbar = () => {
               </div>
             </MenuItem>
             <MenuItem style={{ border: "none", color: "black", margin: "10px", backgroundColor: "transparent" }}>
-              <div onClick={handleLogin} className="btn-div">
-                <IoLogInOutline />
-                <button className='nav-btn' >Login/Signup</button>
-              </div>
+            {user ? <div onClick={handleLogout} className="btn-div">
+            <IoLogInOutline />
+            <button className='nav-btn' >Logout</button>
+          </div> : <div onClick={handleLogin} className="btn-div">
+            <IoLogInOutline />
+            <button className='nav-btn' >Login/Signup</button>
+          </div>}
             </MenuItem>
           </MenuList>
         </Menu> : null}
@@ -107,10 +121,14 @@ const Navbar = () => {
             <button className='nav-btn' >
               Saved Recipes</button>
           </div>
-          <div onClick={handleLogin} className="btn-div">
+          {user ? <div onClick={handleLogout} className="btn-div">
+            <IoLogInOutline />
+            <button className='nav-btn' >Logout</button>
+          </div> : <div onClick={handleLogin} className="btn-div">
             <IoLogInOutline />
             <button className='nav-btn' >Login/Signup</button>
-          </div>
+          </div>}
+
         </div>
         }
       </div>

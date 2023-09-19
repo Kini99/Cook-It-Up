@@ -5,7 +5,7 @@ const auth=async(req,res,next)=>{
     try{
         const token=req.headers.authorization?.split(" ")[1] || null;
         if(token){
-            let decoded=jwt.verify(token,"masai");
+            let decoded=jwt.verify(token,"key");
             req.body.userID=decoded.userID;
             return next()
         }else{

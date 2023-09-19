@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signup } from "../redux/AuthReducer/Action";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import jwtDecode from 'jwt-decode';
 import "../styles/Login.css";
 import logo from "../assets/logo.png";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -21,10 +22,15 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [prevLocation, setPrevLocation] = useState(null);
 
   const { isAuth,username } = useSelector((store) => store.AuthReducer);
 
-console.log("here", isAuth,username);
+  useEffect(() => {
+    if (location.state && location.state.from) {
+      setPrevLocation(location.state.from);
+    }
+  }, [location.state]);
 
   const handleLogin = () => {
     const userData = {
@@ -34,9 +40,8 @@ console.log("here", isAuth,username);
 
     dispatch(login(userData))
       .then((res) => {
-        console.log("login successful", res)
-        console.log(username)
-        navigate(location.state)
+        localStorage.setItem("user",name);
+          navigate(location.state || "/");
       })
 
     setName("");
@@ -49,9 +54,9 @@ console.log("here", isAuth,username);
       email,
       password,
     };
-console.log("userdata", userData)
     dispatch(signup(userData))
       .then((res) => {
+        localStorage.setItem("user",name);
         navigate(location.state)
       })
       .catch((err) => alert(err.response.data.message));
@@ -109,6 +114,7 @@ console.log("userdata", userData)
 
   return (
     <>
+    <Navbar/>
       <div className="main-container">
         <div className="container">
           <img src={logo} alt="" />

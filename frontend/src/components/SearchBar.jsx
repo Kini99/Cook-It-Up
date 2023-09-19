@@ -23,6 +23,11 @@ const SearchBar = () => {
         placeholder='Type any dish...'
         className='input'
         onChange={(e)=>setQuery(e.target.value)}
+        onKeyDown={(e)=>{if (e.key === 'Enter') {
+          return handleSearch();
+        }}}
+        
+    tabIndex="0"
       />
       <Button
         h={{ base: 'auto', md: '85%' }}

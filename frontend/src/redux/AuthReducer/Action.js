@@ -1,4 +1,4 @@
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from "../ActionTypes";
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from "../ActionTypes";
 import axios from "axios";
 
 export const login = (userData) => async(dispatch) => {
@@ -25,4 +25,8 @@ export const signup = (userData) => (dispatch) => {
       dispatch({ type: LOGIN_FAILURE });
       alert("User already Exists! Kindly Login!")
     })
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
 };

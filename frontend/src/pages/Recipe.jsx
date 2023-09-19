@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getRecipeDetails } from '../redux/RecipeReducer/Action';
 import Navbar from "../components/Navbar";
 import Footer from '../components/Footer';
@@ -11,49 +11,104 @@ import "../styles/Recipe.css";
 import { Button } from '@chakra-ui/react';
 import axios from "axios";
 import RecipeCarousel from '../components/RecipeCarousal';
+import { getSavedRecipe, saveRecipe } from '../redux/SavedReducer/Action';
 
 const Recipe = () => {
 
   const { recipe } = useSelector((store) => store.RecipeReducer);
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [similarRecipes,setSimilarRecipes]=useState();
+  const navigate = useNavigate();
+  const [similarRecipes, setSimilarRecipes] = useState();
+  const [saved, setSaved] = useState(false);
 
-  const { isAuth,username } = useSelector((store) => store.AuthReducer);
+  const { isAuth, username } = useSelector((store) => { return store.AuthReducer }, shallowEqual);
+  const { savedRecipe } = useSelector((store) => {
+    return store.SavedReducer
+  }, shallowEqual);
+ const user=localStorage.getItem("user");
 
   useEffect(() => {
     dispatch(getRecipeDetails(id));
-  }, [dispatch, id]);
+    dispatch(getSavedRecipe(username));
+    setSaved(false);
+  }, [id, username]);
 
-  useEffect(()=>{
+
+  useEffect(() => {
     axios.get(`${process.env.REACT_APP_SERVER}recipe/similar/${id}`)
-     .then((res) => res.data)
-     .then((data) =>setSimilarRecipes(data))
-     .catch((error) => console.log(error));
-   },[])
-
-   console.log(similarRecipes)
+      .then((res) => res.data)
+      .then((data) => setSimilarRecipes(data))
+      .catch((error) => console.log(error));
+      window.scrollTo(0, 0);
+  }, [recipe])
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const handleSave = () => {
-    if (!isAuth) alert("Kindly Login First!");
+  const handleSave = async() => {
+    if (!user) {
+      alert("Kindly Login First!");
+      navigate("/login");
+      return;
+    }
 
+    const recipeDetails = {
+      recipe: recipe.aggregateLikes,
+      cuisines: recipe.cuisines,
+      diets: recipe.diets,
+      dishTypes: recipe.dishTypes,
+      extendedIngredients: recipe.extendedIngredients,
+      healthScore: recipe.healthScore,
+      id: recipe.id,
+      image: recipe.image,
+      instructions: recipe.instructions,
+      readyInMinutes: recipe.readyInMinutes,
+      summary: recipe.summary,
+      title: recipe.title
+    }
+
+    const savedRecipeData = {
+      recipe: recipeDetails,
+      userId: username
+    };
+    console.log("dispatch start")
+    await dispatch(saveRecipe(savedRecipeData));
+   
   }
 
-  console.log(recipe)
+  useEffect(()=>{
+    if (savedRecipe) {
+      console.log(savedRecipe)
+      const alreadySaved = savedRecipe.filter((el) =>recipe.id == el.recipe.id
+       );
+      console.log(alreadySaved,"already saved")
+      if (alreadySaved.length > 0) {
+        setSaved(true);
+      }
+    }
+  },[savedRecipe,recipe])
 
+console.log(saved,"saved")
   return (
     <>
       <Navbar />
       {recipe && (<div className='recipe-container'>
         <div className='heading'>
-          <h1>{recipe.title.charAt(0).toUpperCase() + recipe.title.slice(1)}</h1>
-          <Button
+          <h1>{recipe.title?.charAt(0).toUpperCase() + recipe.title?.slice(1)}</h1>
+          {saved ? <Button
             h={{ base: 'auto', md: '85%' }}
             p={"2"}
+            size='lg'
+            bg={"orange.400"}
+            _hover={{ bg: "orange.300" }}
+            className='button'
+          >
+            Saved!
+          </Button> : <Button
+            h={{ base: 'auto', md: '85%' }}
+            p={"2"} 
             size='lg'
             bg={"orange.400"}
             _hover={{ bg: "orange.300" }}
@@ -61,7 +116,7 @@ const Recipe = () => {
             className='button'
           >
             Save Recipe
-          </Button>
+          </Button>}
         </div>
         <div className='recipe-details'>
           <div className='image-container'>
@@ -89,7 +144,7 @@ const Recipe = () => {
             <p>{recipe.diets?.map(capitalizeFirstLetter).join(', ')}</p>
             <br />
             <h3>Instructions:</h3>
-            <p>{recipe.instructions.charAt(0).toUpperCase() + recipe.instructions.slice(1)}</p>
+            <p>{recipe.instructions?.charAt(0).toUpperCase() + recipe.instructions?.slice(1)}</p>
           </div>
         </div>
         <div>
@@ -107,7 +162,7 @@ const Recipe = () => {
       )}
       <div className='similar-recipe'>
         <h1>Similar Recipes</h1>
-      <RecipeCarousel data={similarRecipes}/>
+        <RecipeCarousel data={similarRecipes} />
       </div>
       <Footer />
     </>

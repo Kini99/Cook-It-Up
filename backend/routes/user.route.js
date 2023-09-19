@@ -58,18 +58,6 @@ userRouter.post("/login",async(req,res)=>{
     }
 })
 
-userRouter.get("/logout",async(req,res)=>{
-    try{
-    const token=req.headers.authorization?.split(" ")[1] || null
-    if(token){
-        res.status(200).json({msg:"Logout Successful!"})
-    }    
-    }catch(err){
-        res.status(400).json({error:err.messag})
-    }
-})
-
-
 module.exports={
     userRouter
 }
